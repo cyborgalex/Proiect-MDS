@@ -9,7 +9,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>index</h1>
-   
+    <h1>register</h1>
+    <form method="POST" action="">
+        {{ form.csrf_token }}
+        {{ form.post.label }} {{ form.post }}
+
+        
+        <input type="submit" value="Go">
+    </form>
 </body>
 </html>
