@@ -9,7 +9,6 @@
         <a href='{{request.endpoint+"?page="+(paginator.page-1)|string}}'>prev</a>
     {%endif%}
     {{paginator.page}}/{{paginator.pages}}
-
     {%if paginator.has_next%}
         <a href='{{request.endpoint+"?page="+(paginator.page+1)|string}}'>next</a>
     {%endif%}

@@ -3,7 +3,6 @@
 #pylint:disable=E1101
 
 
-
 from flask import Flask, render_template, redirect,url_for,flash,request
 from flask_sqlalchemy  import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -19,8 +18,6 @@ db=SQLAlchemy(app)
 login_manager=LoginManager()
 login_manager.init_app(app)
 login_manager.login_view='login'
-
-
 
 #Function to get the user object from the database so the login manager knows which user to login
 @login_manager.user_loader
@@ -45,7 +42,6 @@ class paginator:
     @property
     def has_prev(self):
         return self.page>1
-
 
 
 @app.route('/index')
@@ -78,8 +74,6 @@ def login():
     form=login_form()
     if form.validate_on_submit():
         new=user.query.filter_by(username=form.username.data).first()
-        if new is not None:
-            #print(new.password)
             print(check_password_hash(new.password,form.password.data))
             if check_password_hash(new.password,form.password.data):
                 login_user(new,remember=form.remember.data)
@@ -107,8 +101,9 @@ def register():
 
 
 @app.route('/post',methods=['GET','POST'])
+
 @login_required
-def postingFunction():
+def postingFunction()
     form=post_form()
     if form.validate_on_submit():
         new=post(text=form.post.data,user_id=1)
@@ -116,12 +111,10 @@ def postingFunction():
         db.session.commit()
     return render_template('post.html',form=form)
 
-
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)

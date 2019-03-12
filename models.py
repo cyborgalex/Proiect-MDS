@@ -16,7 +16,6 @@ class user(UserMixin, db.Model):
     posts=db.relationship('post',backref='user',lazy=True)
 
 
-
 class post(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     text=db.Column(db.Text(),nullable=False)
@@ -33,7 +32,6 @@ class login_form(FlaskForm):
     username=StringField('username',validators=[InputRequired()])
     password=PasswordField('password',validators=[InputRequired()])
     remember=BooleanField('remember')
-
 
 
 class register_form(FlaskForm):
