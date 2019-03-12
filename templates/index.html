@@ -1,34 +1,16 @@
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>login</h1>
-    {%if current_user.is_authenticated%}
-    <p>{{current_user.username}}</p>
-    <a href="logout">Logout</a>
-    {%else%}
-    <p>Nu esti logat</p>
-    <a href="login">Login</a>
-    <a href="register">Register</a>
-    {%endif%}
+{%extends "base.html"%}
+{%block title%}Home{%endblock%}
+{%block content%}
     {%for post in posts%}
-    <p>{{post.text}} {{post.user.username}}</p>
+        <p>{{post.text}} {{post.user.username}}</p>
     {%endfor%}
     
     {%if paginator.has_prev%}
-    <a href='{{request.endpoint+"?page="+(paginator.page-1)|string}}'>prev</a>
+        <a href='{{request.endpoint+"?page="+(paginator.page-1)|string}}'>prev</a>
     {%endif%}
     {{paginator.page}}/{{paginator.pages}}
 
     {%if paginator.has_next%}
-    <a href='{{request.endpoint+"?page="+(paginator.page+1)|string}}'>next</a>
+        <a href='{{request.endpoint+"?page="+(paginator.page+1)|string}}'>next</a>
     {%endif%}
-    </body>
-</html>
+{%endblock%}

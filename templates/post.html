@@ -1,15 +1,9 @@
+{%extends "base.html"%}
+{%block title%}
+Anunt nou
+{%endblock%}
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>register</h1>
+{%block content%}
     <form method="POST">
         {{ form.csrf_token }}
         {{ form.post.label }} {{ form.post }}
@@ -17,5 +11,4 @@
         
         <input type="submit" value="Go">
     </form>
-</body>
-</html>
+{%endblock%}

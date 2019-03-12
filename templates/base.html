@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}-K9Adopt</title>
+</head>
+<body>
+    <header>
+        <p>
+            {%if current_user.is_authenticated%}
+                Hello, {{current_user.username}}!<br>
+                <a href='logout'>Logout</a> <a href='post'>Add a new doggo</a>
+            {%else%}
+                Hello, you're not logged in!<br>
+                <a href='login'>Login</a>
+                <a href='register'>Register</a>
+            {%endif%}
+        </p>
+    </header>
+    {% block content%}{%endblock%}
+    
+</body>
+</html>
