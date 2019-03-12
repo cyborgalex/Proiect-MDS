@@ -80,8 +80,6 @@ def login():
     if form.validate_on_submit():
         new=db_models.user.query.filter_by(username=form.username.data).first()
         if new is not None:
-            #print(new.password)
-            print(check_password_hash(new.password,form.password.data))
             if check_password_hash(new.password,form.password.data):
                 login_user(new,remember=form.remember.data)
                 return redirect(url_for('index'))
