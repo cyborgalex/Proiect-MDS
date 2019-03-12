@@ -72,7 +72,7 @@ def index():
 
 @app.route('/login',methods=['GET','POST'])
 def login():
-    print(request.endpoint)
+    #print(request.endpoint)
 
     if current_user.is_authenticated:
         return redirect(url_for('index'))
