@@ -52,19 +52,18 @@ class paginator:
 @app.route('/')
 def index():
     arguments=request.args
-
     print(request.endpoint)
     if 'page' in arguments:
-        page_number=int(arguments['page'])-1
+        page_number=int(arguments['page'])
     else:
-        page_number=0
+        page_number=1
 
     count=10
     total=post.query.count()
     print(total)
-    pag=paginator(page_number+1,count,total)
+    pag=paginator(page_number,count,total)
 
-    posts=post.query.offset(page_number*count).limit(count).all()
+    posts=post.query.offset((page_number-1)*count).limit(count).all()
     
     print(posts)
     return render_template('index.html',posts=posts,paginator=pag)
