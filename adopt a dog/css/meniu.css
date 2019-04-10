@@ -88,9 +88,9 @@
     }
   }
   nav ul a {
-    color: #140101;
+    color: rgb(65, 64, 64);
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 15px;
   }
   
   .mobile-toggle {
