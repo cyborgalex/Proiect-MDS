@@ -1,0 +1,144 @@
+.main_h {
+    position: fixed;
+    max-height: 70px;
+    z-index: 999;
+    width: 99%;
+    color: rgb(65, 64, 64);
+    top: 0px;
+    background-color: rgba(255, 255, 255, 0.93);
+    opacity: 1;
+    overflow: hidden;
+    font-family: "Montserrat", sans-serif;
+    
+  }
+  
+  @media only screen and (max-width: 766px) {
+    .main_h {
+      padding-top: 25px;
+    }
+  }
+  
+  .open-nav {
+    max-height: 400px !important;
+    opacity: 0.9;
+  }
+  .open-nav .mobile-toggle {
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+  }
+  
+  
+  
+  .logo {
+    width: 50px;
+    font-size: 25px;
+    /*color: #8f8f8f;*/
+    color: rgb(65, 64, 64);
+    text-transform: uppercase;
+    float: left;
+    display: block;
+    margin-top: 0;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  @media only screen and (max-width: 766px) {
+    .logo {
+      float: none;
+    }
+  }
+  
+  nav {
+    float: right;
+    width: 70%;
+    
+  }
+  @media only screen and (max-width: 766px) {
+    nav {
+      width: 100%;
+    }
+  }
+  nav ul {
+    list-style: none;
+    overflow: hidden;
+    text-align: right;
+    float: right;
+  }
+  @media only screen and (max-width: 766px) {
+    nav ul {
+      padding-top: 10px;
+      margin-bottom: 22px;
+      float: left;
+      text-align: center;
+      width: 100%;
+    }
+  }
+  nav ul li {
+    display: inline-block;
+    margin-left: 35px;
+    line-height: 1.5;
+  }
+  @media only screen and (max-width: 766px) {
+    nav ul li {
+      width: 100%;
+      padding: 7px 0;
+      margin: 0;
+    }
+  }
+  nav ul a {
+    color: #140101;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  
+  .mobile-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    right: 22px;
+    top: 0;
+    width: 30px;
+    -webkit-transition: all 200ms ease-in;
+    -moz-transition: all 200ms ease-in;
+    transition: all 200ms ease-in;
+  }
+
+  @media only screen and (max-width: 766px) {
+    .mobile-toggle {
+      display: block;
+    }
+  }
+  .mobile-toggle span {
+    width: 30px;
+    height: 4px;
+    margin-bottom: 6px;
+    border-radius: 1000px;
+    background: #8f8f8f;
+    display: block;
+  }
+  
+  .row {
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 2%;
+    
+  }
+  
+  * {
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  
+  a {
+    text-decoration: none;
+  }
+  
+  main {
+    margin-top: 70px; 
+  }
+ 
+  
+  
