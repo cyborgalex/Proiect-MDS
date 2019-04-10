@@ -2,7 +2,8 @@
     position: fixed;
     max-height: 70px;
     z-index: 999;
-    width: 99%;
+    width: 100%;
+    left: 0px;
     color: rgb(65, 64, 64);
     top: 0px;
     background-color: rgba(255, 255, 255, 0.93);
@@ -20,7 +21,7 @@
   
   .open-nav {
     max-height: 400px !important;
-    opacity: 0.9;
+    opacity: 1;
   }
   .open-nav .mobile-toggle {
     transform: rotate(-90deg);
@@ -38,12 +39,14 @@
     float: left;
     display: block;
     margin-top: 0;
-    line-height: 1.5;
+    line-height: 2;
     margin-bottom: 10px;
   }
   @media only screen and (max-width: 766px) {
     .logo {
       float: none;
+      line-height: 1;
+
     }
   }
   
