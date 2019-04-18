@@ -5,3 +5,10 @@ Anunt nou
 
 {%block content%}
     <form method="POST">
+        {{ form.csrf_token }}
+        {{ form.post.label }} {{ form.post }}
+
+        
+        <input type="submit" value="Go">
+    </form>
+{%endblock%}    

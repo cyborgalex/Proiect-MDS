@@ -1,45 +1,77 @@
+'''
+Module DocString-To be added
+'''
+from datetime import datetime
 from flask_login import UserMixin
-from flask_wtf import FlaskForm 
+from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
-from main import db
+from flask_sqlalchemy import SQLAlchemy
+
+DB = SQLAlchemy()
+
+# VSCODE pylint throws an error when using SQLAlchemy
+# pylint:disable=E1101
 
 
-#VSCODE pylint throws an error when using SQLAlchemy
-#pylint:disable=E1101
-
-class user(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20),unique=True)
-    email = db.Column(db.String(20),unique=True)
-    password= db.Column(db.String(80))
-    posts=db.relationship('post',backref='user',lazy=True)
+class User(UserMixin, DB.Model):
+    id = DB.Column(DB.Integer, primary_key=True)
+    username = DB.Column(DB.String(20), unique=True)
+    email = DB.Column(DB.String(20), unique=True)
+    password = DB.Column(DB.String(80))
+    posts = DB.relationship('Post', backref='user', lazy=True)
+    rank = DB.Column(DB.Integer, DB.ForeignKey('rank.id'), default=2)
 
 
-class post(db.Model):
-    id=db.Column(db.Integer, primary_key=True)
-    text=db.Column(db.Text(),nullable=False)
-    user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
-    comments=db.relationship('comment',backref='post',lazy=True)
-
-class comment(db.Model):
-    id=db.Column(db.Integer, primary_key=True)
-    text=db.Column(db.Text(),nullable=False)
-    user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
-    post_id=db.Column(db.Integer,db.ForeignKey('post.id'),nullable=False)
-
-class login_form(FlaskForm):
-    username=StringField('username',validators=[InputRequired()])
-    password=PasswordField('password',validators=[InputRequired()])
-    remember=BooleanField('remember')
+class Rank(DB.Model):
+    id = DB.Column(DB.Integer, primary_key=True)
+    rank_name = DB.Column(DB.String(20))
 
 
-class register_form(FlaskForm):
-    username=StringField('username',validators=[InputRequired(),Length(min=4,max=20)])
-    password=PasswordField('password',validators=[InputRequired(),Length(min=8,max=80)])
-    email=StringField('email',validators=[Email(),InputRequired(),Length(min=5,max=80)])
+
+POST_TAG = DB.Table('post_tag',
+                    DB.Column('post_id', DB.Integer, DB.ForeignKey('post.id')),
+                    DB.Column('tag_id', DB.Integer, DB.ForeignKey('tag.id'))
+                    )
 
 
-class post_form(FlaskForm):
-    post=StringField('post',validators=[InputRequired()])
+class Post(DB.Model):
+    id = DB.Column(DB.Integer, primary_key=True)
+    text = DB.Column(DB.Text(), nullable=False)
+    user_id = DB.Column(DB.Integer, DB.ForeignKey('user.id'), nullable=False)
+    comments = DB.relationship('Comment', backref='post', lazy=True)
+    tags = DB.relationship('Tag', secondary=POST_TAG)
+    date = DB.Column(DB.DateTime, default=datetime.utcnow)
 
+
+
+class Comment(DB.Model):
+    id = DB.Column(DB.Integer, primary_key=True)
+    text = DB.Column(DB.Text(), nullable=False)
+    user_id = DB.Column(DB.Integer, DB.ForeignKey('user.id'), nullable=False)
+    post_id = DB.Column(DB.Integer, DB.ForeignKey('post.id'), nullable=False)
+
+
+class Tag(DB.Model):
+    id = DB.Column(DB.Integer, primary_key=True)
+    tag_name = DB.Column(DB.String(20))
+
+
+
+class LoginForm(FlaskForm):
+    username = StringField('username', validators=[InputRequired()])
+    password = PasswordField('password', validators=[InputRequired()])
+    remember = BooleanField('remember')
+
+
+class RegisterForm(FlaskForm):
+    username = StringField('username', validators=[
+        InputRequired(), Length(min=4, max=20)])
+    password = PasswordField('password', validators=[
+        InputRequired(), Length(min=8, max=80)])
+    email = StringField('email', validators=[
+        Email(), InputRequired(), Length(min=5, max=80)])
+
+
+class PostForm(FlaskForm):
+    post = StringField('post', validators=[InputRequired()])

@@ -3,11 +3,11 @@
 {%block title%}Login{%endblock%}
 {%block content%}
  
- {% for message in get_flashed_messages() %}
+{% for message in get_flashed_messages() %}
     <div style='color:red'>
     {{ message }}
     </div>
-    {% endfor %}
+{% endfor %}
     <form method="POST">
         {{ form.csrf_token }}
         {{ form.username.label }} {{ form.username }}
