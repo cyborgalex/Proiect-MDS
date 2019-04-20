@@ -1,8 +1,12 @@
+body{
+    margin:0;
+    padding:0;
+}
 .main_h {
     position: fixed;
     max-height: 70px;
     z-index: 999;
-    width: 99%;
+    width: 100%;
     color: rgb(65, 64, 64);
     padding-top: 10px;
     background: none;
