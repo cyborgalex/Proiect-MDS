@@ -1,0 +1,44 @@
+
+.content{
+    width: 100%;
+    max-width: 70%;
+    margin: 0 auto;
+    
+    padding: 2% 3%;  
+      
+}
+
+h1 {
+    padding: 10px;
+}
+
+.item{
+    max-height: 250px;
+    margin: 1em;  
+    display: block;
+    
+}
+
+.item img {
+    width: 30%;
+    height: 200px;
+    padding: 1em;
+    float: left;
+    
+    
+}
+
+@media screen and (max-width:1000px){
+    .item img{
+        width: 47%;
+    }
+}
+
+
+
+
+@media screen and (max-width:766px){
+    .item img{
+        width: auto;
+    }
+}
