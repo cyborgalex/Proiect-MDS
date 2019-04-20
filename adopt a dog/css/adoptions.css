@@ -28,12 +28,12 @@ h1 {
 .item img {
    
     height: 200px;
-    padding: 0.5em;
-    max-width: 95%;
-   
-    
+    width: 250px;
+    padding: 1em;
+    max-width: 100%;
     
 }
+
 .item:hover img{
     transform: scale(1.3);
     
@@ -110,7 +110,7 @@ h1 {
 
 
 
-.item .hvrbox-text_mobile {
+.item .box-bone {
 	font-size: 15px;
 	border-top: 1px solid rgb(179, 179, 179); /* for old browsers */
 	border-top: 1px solid rgba(179, 179, 179, 0.7);
@@ -118,7 +118,33 @@ h1 {
 	padding-top: 2px;
 	/*display: none;*/
 }
-.item.active .hvrbox-text_mobile {
-	display: block;
-}
 
+
+
+.item .bone{
+    position: relative; 
+    top: 50%;
+    color: #f1f1f1;
+    font-size: 40px;
+    transition: 0.3s;
+  }
+
+  .item input{
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 90%;
+    height: 25%;
+    z-index: 99999;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  
+  .item:hover > .bone{
+    transform: translate(-50%,-50%) scale(1);
+  }
+  .item input:checked + .bone{
+    color: #e74c3c;
+  }
+  
