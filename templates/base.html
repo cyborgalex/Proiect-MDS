@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <title>{% block title %}{% endblock %}-K9Adopt</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{{
+        url_for('static', filename='scripts.js') }}"></script>
+    <link href="{{url_for('static', filename='styles.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <header>
@@ -9,7 +13,7 @@
         <p>
             {%if current_user.is_authenticated%}
                 Hello, {{current_user.username}}!<br>
-                <a href='logout'>Logout</a> <a href='post'>Add a new doggo</a>
+                <a href='{{url_for("logout")}}'>Logout</a> <a href='{{url_for("posting_function")}}'>Add a new doggo</a>
             {%else%}
                 Hello, you're not logged in!<br>
                 <a href='login'>Login</a>

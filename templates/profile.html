@@ -1,7 +1,7 @@
 
 {%extends "base.html"%}
 {%block title%}
-Anunt nou
+Profile
 {%endblock%}
 
 {%block content%}
@@ -13,14 +13,15 @@ Anunt nou
 {% endfor %}
 <form method="POST">
         {{ form.csrf_token }}
-        {{ form.title.label }} {{ form.title }}<br>
-        {{ form.post.label }} {{ form.post }}<br>
-        {{form.tags(id="taglist")}}
+        {{ form.email.label }} {{ form.email }}<br>
+        {{ form.last_name.label }} {{ form.last_name }}<br>
+        {{ form.first_name.label }} {{ form.first_name }}<br>
+        {{ form.phone.label }} {{ form.phone }}<br>
         <input type="submit" value="Go">
 </form>
 <div id="list">
     {%for tag in tags%}
     <p>{{tag}}</p>
-    {%endfor%}
+    {%endfor%}  
 </div>
 {%endblock%}    

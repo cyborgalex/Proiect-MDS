@@ -1,0 +1,12 @@
+.clicked{
+    background-color: blue;
+    color: red;
+    text-align:center;
+}
+
+#list{
+    height:200px;
+    overflow:auto;
+    min-width: 200px;
+    max-width:200px;
+}
