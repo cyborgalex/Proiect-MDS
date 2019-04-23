@@ -67,29 +67,32 @@ class Paginator:
 @APP.route('/')
 @APP.route('/index')
 def index():
-    arguments = request.args
-    if 'page' in arguments:
-        page_number = int(arguments['page'])
-    else:
-        page_number = 1
+   
+    return render_template('index.html')
 
-    count = 10
-    total = Post.query.count()
-    pag = Paginator(page_number, count, total)
-
-    posts = Post.query.offset((page_number-1)*count).limit(count).all()
-    return render_template('index.html', posts=posts, paginator=pag)
-
-
-@APP.route('/login', methods=['GET', 'POST'])
+@APP.route('/login', methods=['GET','POST'])
 def login():
-    form = LoginForm()
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form_register = RegisterForm()
+    form_login = LoginForm()
+    return render_template('login.html', form_login=form_login,form_register=form_register)
+
+
+
+
+
+@APP.route('/loginn', methods=['POST'])
+def loginn():
+    form_login = LoginForm()
+    form_register = RegisterForm()
+
     if request.method=='POST':
-        if form.validate_on_submit():
-            new = User.query.filter_by(username=form.username.data).first()
+        if form_login.validate_on_submit():
+            new = User.query.filter_by(username=form_login.username.data).first()
             if new is not None:
-                if check_password_hash(new.password, form.password.data):
-                    login_user(new, remember=form.remember.data)
+                if check_password_hash(new.password, form_login.password.data):
+                    login_user(new, remember=form_login.remember.data)
                     return redirect(url_for('index'))
                 else:
                     flash('Username or password is incorect')
@@ -99,39 +102,40 @@ def login():
         if current_user.is_authenticated:
             return redirect(url_for('index'))
         
-    return render_template('login.html', form=form)
+    return render_template('login.html', form_login=form_login,form_register=form_register)
 
 
-@APP.route('/register', methods=['GET', 'POST'])
+@APP.route('/register', methods=['POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
 
-    form = RegisterForm()
-    if form.validate_on_submit():
+    form_login = LoginForm()
+    form_register = RegisterForm()
+
+    if form_register.validate_on_submit():
         query_email = DB.session.query(User.id).filter_by(
-            email=form.email.data).scalar() is not None
+            email=form_register.email.data).scalar() is not None
         query_user = DB.session.query(User.id).filter_by(
-            username=form.username.data).scalar() is not None
+            username=form_register.username.data).scalar() is not None
         if not query_email and not query_user:
             hashed_password = generate_password_hash(
-                form.password.data, method='sha256')
-            new = User(username=form.username.data,
-                       password=hashed_password, email=form.email.data)
+                form_register.password.data, method='sha256')
+            new = User(username=form_register.username.data,
+                       password=hashed_password, email=form_register.email.data)
             DB.session.add(new)
             DB.session.commit()
             return redirect(url_for('login'))
         else:
             flash('Username or Email already exist')
-    return render_template('register.html', form=form)
+    return render_template('login.html',form_login=form_login, form_register=form_register)
 
 
 
 
-
-@APP.route('/post', methods=['GET', 'POST'])
+@APP.route('/adddog', methods=['GET', 'POST'])
 @login_required
-def posting_function():
+def adddog():
     form = PostForm()
     if request.method=='POST' and form.validate_on_submit():
         new = Post(title=form.title.data,text=form.post.data, user=current_user)
@@ -152,6 +156,23 @@ def is_admin(user):
 
 
 APP.jinja_env.globals['is_admin']=is_admin
+
+@APP.route('/adoptions',methods=['GET','POST'])
+def adoptions():
+    arguments = request.args
+    if 'page' in arguments:
+        page_number = int(arguments['page'])
+    else:
+        page_number = 1
+
+    count = 9
+    total = Post.query.count()
+    pag = Paginator(page_number, count, total)
+
+    posts = Post.query.offset((page_number-1)*count).limit(count).all()
+    
+    return render_template('adoptions.html', posts=posts, paginator=pag)
+
 
 @APP.route('/delete_post', methods=['GET','POST'])
 @login_required
