@@ -1,21 +1,42 @@
 
 {%extends "base.html"%}
 {%block title%}Login{%endblock%}
+{%block links%}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/login.css') }}">
+<script src="{{url_for('static', filename='js/login.js') }}"></script>
+
+{%endblock%}
+
 {%block content%}
- 
-{% for message in get_flashed_messages() %}
-    <div style='color:red'>
-    {{ message }}
+
+
+
+<div class="login-page">
+    <div class="form">
+        {% for message in get_flashed_messages() %}
+        <div style='color:red'>
+            {{ message }}
+        </div>
+        {% endfor %}
+        <form action="{{url_for('register')}}" method="POST" class="register-form">
+            {{form_register.csrf_token}}
+            {{form_register.username(placeholder="name")}}
+            {{form_register.password(placeholder="password")}}
+            {{form_register.email(placeholder="email address")}}
+            <input type="submit" value="create">
+            <p class="message">Already registered? <a href="#">Sign In</a></p>
+        </form>
+        <form action="{{url_for('loginn')}}" method="POST">
+            {{ form_login.csrf_token }}
+            {{ form_login.username(placeholder="Name") }}
+            {{ form_login.password(placeholder="Password") }}
+            remember{{form_login.remember}}
+            <input type="submit" value="Go">
+            <p class="message">Not registered? <a href="#">Create an account</a></p>
+        </form>
     </div>
-{% endfor %}
-    <form method="POST">
-        {{ form.csrf_token }}
-        {{ form.username.label }} {{ form.username }}
-        {{ form.password.label }} {{ form.password }}
-        {{form.remember.label}} {{form.remember}}
-        <input type="submit" value="Go">
-        
-    </form>
+</div>
+
 
 
 {%endblock%}

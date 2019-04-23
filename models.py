@@ -11,8 +11,7 @@ Module DocString-To be added
 from datetime import datetime
 from flask_login import UserMixin
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField,TextAreaField
-from wtforms.fields.html5 import IntegerField
+from wtforms import StringField, PasswordField, BooleanField,TextAreaField, SelectField,IntegerField
 from wtforms.validators import InputRequired, Email, Length,Optional
 from flask_sqlalchemy import SQLAlchemy
 
@@ -48,12 +47,11 @@ POST_TAG = DB.Table('post_tag',
 class Post(DB.Model):
     id = DB.Column(DB.Integer, primary_key=True)
     text = DB.Column(DB.Text(), nullable=False)
-    title = DB.Column(DB.Text(), nullable=False)
+    title = DB.Column(DB.String(20), nullable=False)
     user_id = DB.Column(DB.Integer, DB.ForeignKey('user.id'), nullable=False)
     comments = DB.relationship('Comment', backref='post', lazy=True)
     tags = DB.relationship('Tag', secondary=POST_TAG)
     date = DB.Column(DB.DateTime, default=datetime.utcnow)
-
 
 
 class Comment(DB.Model):
@@ -85,7 +83,6 @@ class PostForm(FlaskForm):
     title = StringField('title', validators=[InputRequired()])
     post = TextAreaField('post', validators=[InputRequired()])
     tags=StringField('tags', validators=[InputRequired()])
-
 
 class ProfileForm(FlaskForm):
     email = StringField('email', validators=[Email(), Length(min=5, max=80), Optional()])

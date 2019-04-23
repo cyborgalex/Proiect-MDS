@@ -1,0 +1,150 @@
+
+.content{
+    width: 100%;
+    max-width: 70%;
+    margin: 0 auto;
+    
+    padding: 2% 3%;  
+      
+}
+
+h1 {
+    padding: 10px;
+}
+
+.item{
+    max-height: 250px;
+    margin: 1em;  
+    display: block;
+    position: relative;
+	overflow: hidden;
+	max-width: 28%;
+	float: left;
+
+
+    
+}
+
+.item img {
+   
+    height: 200px;
+    width: 250px;
+    padding: 1em;
+    max-width: 100%;
+    
+}
+
+.item:hover img{
+    transform: scale(1.3);
+    
+}
+
+
+@media screen and (max-width:1000px){
+    .item {
+        max-width: 46%;
+    }
+}
+
+
+
+
+@media screen and (max-width:766px){
+    .item {
+
+        max-width: 100%;
+        
+    }
+}
+
+
+
+
+.item,
+.item * {
+	box-sizing: border-box;
+}
+
+
+.item .hvrbox-layer_bottom {
+	display: block;
+}
+
+.item .hvrbox-layer_top {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.6);
+	color: #fff;
+	padding: 15px;
+	-moz-transition: all 0.4s ease-in-out 0s;
+	-webkit-transition: all 0.4s ease-in-out 0s;
+	-ms-transition: all 0.4s ease-in-out 0s;
+	transition: all 0.4s ease-in-out 0s;
+}
+.item:hover .hvrbox-layer_top,
+.item.active .hvrbox-layer_top {
+    opacity: 1;
+}
+
+
+
+
+.item .hvrbox-text {
+	text-align: center;
+	font-size: 18px;
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-moz-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+
+
+.item .box-bone {
+	font-size: 15px;
+	border-top: 1px solid rgb(179, 179, 179); /* for old browsers */
+	border-top: 1px solid rgba(179, 179, 179, 0.7);
+	margin-top: 5px;
+	padding-top: 2px;
+	/*display: none;*/
+}
+
+
+
+.item .bone{
+    position: relative; 
+    top: 50%;
+    color: #f1f1f1;
+    font-size: 40px;
+    transition: 0.3s;
+  }
+
+  .item input{
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 90%;
+    height: 25%;
+    z-index: 99999;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  
+  .item:hover > .bone{
+    transform: translate(-50%,-50%) scale(1);
+  }
+  .item input:checked + .bone{
+    color: #e74c3c;
+  }
+  
