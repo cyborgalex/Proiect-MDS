@@ -2,22 +2,47 @@
 <html lang="en">
 <head>
     <title>{% block title %}{% endblock %}-K9Adopt</title>
-</head>
-<body>
-    <header>
-        <h1><a href='index'>K9-Adopt</a></h1>
-        <p>
-            {%if current_user.is_authenticated%}
-                Hello, {{current_user.username}}!<br>
-                <a href='logout'>Logout</a> <a href='post'>Add a new doggo</a>
-            {%else%}
-                Hello, you're not logged in!<br>
-                <a href='login'>Login</a>
-                <a href='register'>Register</a>
-            {%endif%}
-        </p>
-    </header>
-    {% block content%}{%endblock%}
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link   href="{{url_for('static', filename='css/meniu.css') }}" rel="stylesheet" type="text/css">
+    <link rel="icon" href="../img/favicon.ico" type="image/gif">
+    {%block links%}{%endblock%}
+
+</head>
+
+<body>
+    <header class="main_h">
+        <div class="row">
+            <a class="logo" href="{{url_for('index')}}">K9</a>
+    
+            <div class="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+    
+            <nav>
+                <ul>
+                    {%if is_admin(current_user)%}
+                    <li><a href="{{url_for('adddog')}}">Add a dogo</a></li>
+                    {%endif%}
+                    <li><a href="{{url_for('adoptions')}}">Adoptions</a></li>
+                    <li><a href="{{url_for('static',filename='page/about.html')}}">About us</a></li>
+                    {%if current_user.is_authenticated%}
+                    <li><a href="{{url_for('logout')}}">Logout</a></li>
+                    {%else%}
+                    <li><a href="{{url_for('login')}}">Log In/Sign Up</a></li>
+                    {%endif%}
+                </ul>
+            </nav>
+    
+        </div> <!-- / row -->
+    
+    </header>
+
+
+    <main>
+    {% block content%}{%endblock%}
+    </main>
 </body>
 </html>
