@@ -1,6 +1,6 @@
 $( document ).ready(function() {
     let lista=$("#taglist");
-    lista.css("display","none");
+    // lista.css("disabled","disabled");
     let tagArray=[]
     $("#list p").click(function(){
         value=this.innerHTML;
@@ -12,6 +12,5 @@ $( document ).ready(function() {
         else
             tagArray.splice(found,1);
         lista.val(tagArray.join(" "));
-        console.log(tagArray);
     });
 });
