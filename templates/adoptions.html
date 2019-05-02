@@ -20,9 +20,9 @@ src="{{url_for('static', filename='js/adopt.js') }}">
 {%for post in posts%}
 
 
-        <a href="post_dog.html" target="blank">
+        <a href="dog?id={{post.id}}" target="blank">
             <div class="item">
-                <img src="{{url_for('static',filename='img/dog1.jpg')}}" alt="dog">
+                <img src="{{url_for('static',filename='uploads/images/'+post.images[0].name)}}" alt="dog">
                 <div class="hvrbox-layer_top">
                     <div class="hvrbox-text"> <p class="name">{{post.title}}</p>    
                         <div class="box-bone">

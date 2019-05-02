@@ -7,30 +7,35 @@ Module DocString-To be added
 
 
 from math import ceil
-
+import os
+import time
+from random import randint
 
 from flask import Flask, render_template, redirect, url_for, flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from models import DB, User, Post, Tag, LoginForm, PostForm, RegisterForm, ProfileForm
+from models import DB, User, Post, Tag, Image, LoginForm, PostForm, RegisterForm, ProfileForm
 
 APP = Flask(__name__)
 APP.config['SECRET_KEY'] = "testkey"
 APP.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+APP.config['UPLOAD_FOLDER'] = 'static///uploads///images'
 DB.init_app(APP)
 
 
-tags=['golden retreiver','husky','crossbreed','labrador','dad3addada','dadaddada','dadadadada1','dadadda2da']
+TAGS = ['golden', 'husky', 'crossbreed',
+        'labrador', 'dad3addada', 'dadaddada', 'dadadadada1', 'dadadda2da']
 
 
 # with APP.app_context():
 #     DB.create_all()
-#     for tag in tags:
+#     for tag in TAGS:
 #         n=Tag(tag_name=tag)
 #         DB.session.add(n)
 #     DB.session.commit()
 
 _ADMIN_RANK_ = 1
+
 
 LOGIN_MANAGER = LoginManager()
 LOGIN_MANAGER.init_app(APP)
@@ -42,10 +47,16 @@ LOGIN_MANAGER.login_view = 'login'
 
 @LOGIN_MANAGER.user_loader
 def load_user(user_id):
+    '''
+    User loading function
+    '''
     return User.query.filter_by(id=user_id).first()
 
 
 class Paginator:
+    '''
+    Class to create pagination on the adoptions page
+    '''
     def __init__(self, page, per_page, total):
         self.page = page
         self.per_page = per_page
@@ -53,30 +64,46 @@ class Paginator:
 
     @property
     def pages(self):
+        '''
+        Number of pages
+        '''
         return int(ceil(float(self.total)/self.per_page))
 
     @property
     def has_next(self):
+        '''
+        If there is a next page
+        '''
         return self.page < self.pages
 
     @property
     def has_prev(self):
-        return self.page > 1 
+        '''
+        If there is a previous page
+        '''
+        return self.page > 1
 
 
 @APP.route('/')
 @APP.route('/index')
 def index():
-   
+
+    '''
+    Index
+    '''
     return render_template('index.html')
 
-@APP.route('/login', methods=['GET','POST'])
+@APP.route('/login', methods=['GET', 'POST'])
 def login():
+    '''
+    Login view
+    Workaround to have 2 forms on the same page
+    '''
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form_register = RegisterForm()
     form_login = LoginForm()
-    return render_template('login.html', form_login=form_login,form_register=form_register)
+    return render_template('login.html', form_login=form_login, form_register=form_register)
 
 
 
@@ -84,10 +111,13 @@ def login():
 
 @APP.route('/loginn', methods=['POST'])
 def loginn():
+    '''
+    Login endpoint
+    '''
     form_login = LoginForm()
     form_register = RegisterForm()
 
-    if request.method=='POST':
+    if request.method == 'POST':
         if form_login.validate_on_submit():
             new = User.query.filter_by(username=form_login.username.data).first()
             if new is not None:
@@ -101,12 +131,15 @@ def loginn():
     else:
         if current_user.is_authenticated:
             return redirect(url_for('index'))
-        
-    return render_template('login.html', form_login=form_login,form_register=form_register)
+
+    return render_template('login.html', form_login=form_login, form_register=form_register)
 
 
 @APP.route('/register', methods=['POST'])
 def register():
+    '''
+    Register endpoint
+    '''
     if current_user.is_authenticated:
         return redirect(url_for('index'))
 
@@ -128,7 +161,7 @@ def register():
             return redirect(url_for('login'))
         else:
             flash('Username or Email already exist')
-    return render_template('login.html',form_login=form_login, form_register=form_register)
+    return render_template('login.html', form_login=form_login, form_register=form_register)
 
 
 
@@ -136,29 +169,71 @@ def register():
 @APP.route('/adddog', methods=['GET', 'POST'])
 @login_required
 def adddog():
+    '''
+    Post page
+    '''
     form = PostForm()
-    if request.method=='POST' and form.validate_on_submit():
-        new = Post(title=form.title.data,text=form.post.data, user=current_user)
+    if request.method == 'POST' and form.validate_on_submit():
+
+        new = Post(title=form.title.data, text=form.post.data, user=current_user,
+                   gender=form.gender.data, age=form.age.data)
         for split in form.tags.data.split(' '):
-            tag=Tag.query.filter_by(tag_name=split).first()
+            tag = Tag.query.filter_by(tag_name=split).first()
             if tag is not None:
                 new.tags.append(tag)
+
+        images = request.files.getlist("upload")
+        for img in images:
+            ext = img.filename.split(".")[1]
+            filename = str(int(time.time() * 1e6)+randint(300, 43242))+'.'+ext
+            image_file = os.path.join(APP.config['UPLOAD_FOLDER'], filename)
+            img.save(image_file)
+            new.images.append(Image(name=filename))
+
+
+
+
         DB.session.add(new)
         DB.session.commit()
         return redirect(url_for('index'))
-    return render_template('post.html', form=form,tags=tags)
+    return render_template('post.html', form=form, tags=TAGS)
+
+@APP.route('/dog', methods=['GET', 'POST'])
+def dog():
+    '''
+    View dog
+    '''
+    arguments = request.args
+    if 'id' in arguments:
+        post_id = int(arguments['id'])
+    else:
+        return redirect(url_for('index'))
+
+    query = Post.query.filter_by(id=post_id).first()
+
+    comments = ''
+    return render_template('dog.html', dog=query, comments=comments)
+
+
+
 
 def is_admin(user):
-    if hasattr(user,'rank') and user.rank==_ADMIN_RANK_:
+    '''
+    Check if user is admin
+    '''
+    if hasattr(user, 'rank') and user.rank == _ADMIN_RANK_:
         return True
     else:
         return False
 
 
-APP.jinja_env.globals['is_admin']=is_admin
+APP.jinja_env.globals['is_admin'] = is_admin
 
-@APP.route('/adoptions',methods=['GET','POST'])
+@APP.route('/adoptions', methods=['GET', 'POST'])
 def adoptions():
+    '''
+    Adoptions page
+    '''
     arguments = request.args
     if 'page' in arguments:
         page_number = int(arguments['page'])
@@ -170,13 +245,16 @@ def adoptions():
     pag = Paginator(page_number, count, total)
 
     posts = Post.query.offset((page_number-1)*count).limit(count).all()
-    
+
     return render_template('adoptions.html', posts=posts, paginator=pag)
 
 
-@APP.route('/delete_post', methods=['GET','POST'])
+@APP.route('/delete_post', methods=['POST'])
 @login_required
 def delete_post():
+    '''
+    Delete a post
+    '''
     arguments = request.args
     if 'id' in arguments:
         post_id = int(arguments['id'])
@@ -190,31 +268,36 @@ def delete_post():
 @APP.route('/logout')
 @login_required
 def logout():
+    '''
+    Logout endpoint
+    '''
     logout_user()
     return redirect(url_for('index'))
 
-@APP.route('/profile',methods=['POST','GET'])
+@APP.route('/profile', methods=['POST', 'GET'])
 @login_required
 def profile():
-    form=ProfileForm()
-    if request.method=='POST' and form.validate_on_submit():
+    '''
+    Profile
+    '''
+    form = ProfileForm()
+    if request.method == 'POST' and form.validate_on_submit():
         if form.last_name.data:
-            current_user.last_name=form.last_name.data
+            current_user.last_name = form.last_name.data
         if form.first_name.data:
-            current_user.first_name=form.first_name.data
+            current_user.first_name = form.first_name.data
         if form.phone:
-            current_user.phone=form.phone.data
+            current_user.phone = form.phone.data
         if form.email:
-            current_user.email=form.email.data
+            current_user.email = form.email.data
         DB.session.commit()
         return redirect(url_for('index'))
     else:
-        form.email.data=current_user.email
-        form.first_name.data=current_user.first_name
-        form.last_name.data=current_user.last_name
-        form.phone.data=current_user.phone
+        form.email.data = current_user.email
+        form.first_name.data = current_user.first_name
+        form.last_name.data = current_user.last_name
+        form.phone.data = current_user.phone
     return render_template('profile.html', form=form)
-        
 
 
 
