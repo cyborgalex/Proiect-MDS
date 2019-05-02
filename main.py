@@ -7,16 +7,20 @@ Module DocString-To be added
 
 
 from math import ceil
-
+import os
+import time
+from random import randint
 
 from flask import Flask, render_template, redirect, url_for, flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from models import DB, User, Post, Tag, LoginForm, PostForm, RegisterForm, ProfileForm
+from models import DB, User, Post, Tag, Image, LoginForm, PostForm, RegisterForm, ProfileForm
 
 APP = Flask(__name__)
 APP.config['SECRET_KEY'] = "testkey"
 APP.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+APP.config['UPLOAD_FOLDER'] = 'static///uploads///images'
 DB.init_app(APP)
 
 
@@ -138,11 +142,25 @@ def register():
 def adddog():
     form = PostForm()
     if request.method=='POST' and form.validate_on_submit():
+
         new = Post(title=form.title.data,text=form.post.data, user=current_user)
         for split in form.tags.data.split(' '):
             tag=Tag.query.filter_by(tag_name=split).first()
             if tag is not None:
                 new.tags.append(tag)
+
+        imagedb=[]
+        images = request.files.getlist("upload")
+        for img in images:
+            ext=img.filename.split(".")[1]
+            filename=str(int(time.time() * 1e6)+randint(300,43242))+'.'+ext
+            image_file = os.path.join(APP.config['UPLOAD_FOLDER'], filename)
+            img.save(image_file)
+            new.images.append(Image(name=filename))
+
+
+
+
         DB.session.add(new)
         DB.session.commit()
         return redirect(url_for('index'))

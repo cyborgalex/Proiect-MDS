@@ -11,7 +11,8 @@ Module DocString-To be added
 from datetime import datetime
 from flask_login import UserMixin
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField,TextAreaField, SelectField,IntegerField
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms import StringField, PasswordField, BooleanField,TextAreaField
 from wtforms.validators import InputRequired, Email, Length,Optional
 from flask_sqlalchemy import SQLAlchemy
 
@@ -52,8 +53,16 @@ class Post(DB.Model):
     comments = DB.relationship('Comment', backref='post', lazy=True)
     tags = DB.relationship('Tag', secondary=POST_TAG)
     date = DB.Column(DB.DateTime, default=datetime.utcnow)
+    images = DB.relationship('Image', backref='post', lazy=True)
 
 
+class Image(DB.Model):
+    id=DB.Column(DB.Integer,primary_key=True)
+    name=DB.Column(DB.String,nullable=False)
+    post_id = DB.Column(DB.Integer, DB.ForeignKey('post.id'), nullable=False)
+
+
+    
 class Comment(DB.Model):
     id = DB.Column(DB.Integer, primary_key=True)
     text = DB.Column(DB.Text(), nullable=False)
@@ -83,6 +92,10 @@ class PostForm(FlaskForm):
     title = StringField('title', validators=[InputRequired()])
     post = TextAreaField('post', validators=[InputRequired()])
     tags=StringField('tags', validators=[InputRequired()])
+    upload = FileField('image', validators=[
+        FileRequired(),
+        FileAllowed(['jpg', 'png'], 'Images only!')
+    ])
 
 class ProfileForm(FlaskForm):
     email = StringField('email', validators=[Email(), Length(min=5, max=80), Optional()])

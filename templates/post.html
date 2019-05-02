@@ -19,11 +19,12 @@ rel="stylesheet" type="text/css">
     {{ message }}
     </div>
 {% endfor %}
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
         {{ form.csrf_token }}
         {{ form.title.label }} {{ form.title }}<br>
         {{ form.post.label }} {{ form.post }}<br>
-        {{form.tags(id="taglist")}}
+        {{form.upload(id="upload",multiple="")}}<br> 
+        {{form.tags(id="taglist",onkeypress="return false;")}}<br>
         <input type="submit" value="Go">
 </form>
 <div id="list">
