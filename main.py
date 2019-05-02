@@ -23,7 +23,7 @@ APP.config['UPLOAD_FOLDER'] = 'static///uploads///images'
 DB.init_app(APP)
 
 
-TAGS = ['golden retreiver', 'husky', 'crossbreed',
+TAGS = ['golden', 'husky', 'crossbreed',
         'labrador', 'dad3addada', 'dadaddada', 'dadadadada1', 'dadadda2da']
 
 
@@ -175,7 +175,8 @@ def adddog():
     form = PostForm()
     if request.method == 'POST' and form.validate_on_submit():
 
-        new = Post(title=form.title.data, text=form.post.data, user=current_user)
+        new = Post(title=form.title.data, text=form.post.data, user=current_user,
+                   gender=form.gender.data, age=form.age.data)
         for split in form.tags.data.split(' '):
             tag = Tag.query.filter_by(tag_name=split).first()
             if tag is not None:
@@ -196,6 +197,25 @@ def adddog():
         DB.session.commit()
         return redirect(url_for('index'))
     return render_template('post.html', form=form, tags=TAGS)
+
+@APP.route('/dog', methods=['GET', 'POST'])
+def dog():
+    '''
+    View dog
+    '''
+    arguments = request.args
+    if 'id' in arguments:
+        post_id = int(arguments['id'])
+    else:
+        return redirect(url_for('index'))
+
+    query = Post.query.filter_by(id=post_id).first()
+
+    comments = ''
+    return render_template('dog.html', dog=query, comments=comments)
+
+
+
 
 def is_admin(user):
     '''

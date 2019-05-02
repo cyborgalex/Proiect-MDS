@@ -28,13 +28,11 @@ $(document).ready(function() {
     });
 
     
-    
+    showSlides(slideIndex);
 
 });
 
-document.ready=function(){
-    showSlides(slideIndex);
-}
+
 var slideIndex = 1;
 function plusSlides(n) {
     showSlides(slideIndex += n);
