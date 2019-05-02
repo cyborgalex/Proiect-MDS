@@ -12,7 +12,8 @@ from datetime import datetime
 from flask_login import UserMixin
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import StringField, PasswordField, BooleanField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField,\
+     TextAreaField, RadioField, IntegerField
 from wtforms.validators import InputRequired, Email, Length, Optional
 from flask_sqlalchemy import SQLAlchemy
 
@@ -66,7 +67,9 @@ class Post(DB.Model):
     Post class
     :param int id: Unique id generated for the post
     :param string text: Main body, description of the dog
-    :param string title: Dogs name
+    :param string title: Dog's name
+    :param string gender: Dog's gender
+    :param string age: Dog's age
     :param int user_id: User that posted this dog
     :param comments: Comments for this post
     :param tags: Tags selected for this post
@@ -76,6 +79,8 @@ class Post(DB.Model):
     id = DB.Column(DB.Integer, primary_key=True)
     text = DB.Column(DB.Text(), nullable=False)
     title = DB.Column(DB.String(20), nullable=False)
+    gender = DB.Column(DB.String(6))
+    age = DB.Column(DB.Integer)
     user_id = DB.Column(DB.Integer, DB.ForeignKey('user.id'), nullable=False)
     comments = DB.relationship('Comment', backref='post', lazy=True)
     tags = DB.relationship('Tag', secondary=POST_TAG)
@@ -151,10 +156,14 @@ class PostForm(FlaskForm):
     :param str post: Post body
     :param str tags: Tags
     :param upload: Images
+    :param gender: Gender
+    :param age: Age
     '''
     title = StringField('title', validators=[InputRequired()])
     post = TextAreaField('post', validators=[InputRequired()])
     tags = StringField('tags', validators=[InputRequired()])
+    age = IntegerField('age', validators=[Optional()])
+    gender = RadioField('Gender', choices=[('Male', 'Male'), ('Female', 'Female')])
     upload = FileField('image', validators=[
         FileRequired(),
         FileAllowed(['jpg', 'png'], 'Images only!')
