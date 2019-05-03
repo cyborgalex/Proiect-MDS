@@ -93,6 +93,19 @@
 
 <div class="container">
   <h2>COMMENTS</h2>
+  <form action="dog?id={{dog.id}}" method="POST">
+  {{form.csrf_token}}
+  {{form.text}}
+  <input type="submit" value="post">
+  </form>
+  
+  {%for comment in comments%}
+  <div>
+    <p>={{comment.user.username}} said</p>
+    <p>{{comment.text}}</p>
+    
+  </div>
+  {%endfor%}
 </div>
  
 {%endblock%}
