@@ -9,6 +9,17 @@ body {
 .mySlides {display: none}
 
 
+.bone{
+  font-size:1.5em;
+}
+
+.red{
+  color:red;
+}
+
+
+
+
 main{
   width: 100%;
   max-width: 70%;

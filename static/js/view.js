@@ -27,6 +27,9 @@ $(document).ready(function() {
         event.preventDefault();
     });
 
+
+
+
     
     showSlides(slideIndex);
 
@@ -58,3 +61,18 @@ function plusSlides(n) {
     dots[slideIndex-1].className += " active";
   }
 
+
+
+function like(id,action){
+    $('.bone').toggleClass('red');
+    $.ajax({
+        url: "/bone",
+        type: "post",
+        datatype: "JSON",
+        contentType: "application/json",
+        data: JSON.stringify({
+            id:id,
+            action:action
+        })
+    });
+}
