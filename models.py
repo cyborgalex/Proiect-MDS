@@ -51,8 +51,12 @@ class User(UserMixin, DB.Model):
     posts = DB.relationship('Post', backref='user', lazy=True)
     rank = DB.Column(DB.Integer, DB.ForeignKey('rank.id'), default=2)
     bones = DB.relationship('Post', secondary=BONES_USER_POST)
+    comments = DB.relationship('Comment', backref='user', lazy=True)
 
     def has_liked(self, pid):
+        '''
+        Return if user has liked a post
+        '''
         return Post.query.filter_by(id=pid).first() in self.bones
 
 
@@ -182,6 +186,13 @@ class PostForm(FlaskForm):
         FileRequired(),
         FileAllowed(['jpg', 'png'], 'Images only!')
         ])
+
+class CommentForm(FlaskForm):
+    '''
+    Comment Form
+    :param str text: Comment body
+    '''
+    text = TextAreaField('comment', validators=[InputRequired()])
 
 class ProfileForm(FlaskForm):
     '''

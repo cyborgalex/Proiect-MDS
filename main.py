@@ -14,7 +14,8 @@ from random import randint
 from flask import Flask, render_template, redirect, url_for, flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from models import DB, User, Post, Tag, Image, LoginForm, PostForm, RegisterForm, ProfileForm
+from models import DB, User, Post, Tag, Image, LoginForm, PostForm, \
+    RegisterForm, ProfileForm, CommentForm, Comment
 
 APP = Flask(__name__)
 APP.config['SECRET_KEY'] = "testkey"
@@ -203,6 +204,8 @@ def dog():
     '''
     View dog
     '''
+
+    form = CommentForm()
     arguments = request.args
     if 'id' in arguments:
         post_id = int(arguments['id'])
@@ -210,9 +213,14 @@ def dog():
         return redirect(url_for('index'))
 
     query = Post.query.filter_by(id=post_id).first()
-
-    comments = ''
-    return render_template('dog.html', dog=query, comments=comments)
+    if form.validate_on_submit():
+        gigi = Comment(text=form.text.data, user_id=current_user.id, post_id=post_id)
+        query.comments.append(gigi)
+        DB.session.commit()
+    
+    comments = Comment.query.filter_by(post_id=post_id)
+    print(comments)
+    return render_template('dog.html', dog=query, comments=comments, form=form)
 
 
 
@@ -268,12 +276,15 @@ def delete_post():
 @APP.route('/bone', methods=['POST'])
 @login_required
 def bone():
-    data=request.get_json()
+    '''
+    Like a dog
+    '''
+    data = request.get_json()
     print(data)
     pid = data['id']
     action = data['action']
-    
-   
+
+
     query_post = Post.query.filter_by(id=pid).first_or_404()
     if action == 'like':
         query_post.bones.append(current_user)
@@ -321,4 +332,4 @@ def profile():
 
 
 if __name__ == '__main__':
-    APP.run(host='0.0.0.0',debug=True)
+    APP.run(host='0.0.0.0', debug=True)
