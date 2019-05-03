@@ -265,6 +265,25 @@ def delete_post():
     return redirect(url_for('index'))
 
 
+@APP.route('/bone', methods=['POST'])
+@login_required
+def bone():
+    data=request.get_json()
+    print(data)
+    pid = data['id']
+    action = data['action']
+    
+   
+    query_post = Post.query.filter_by(id=pid).first_or_404()
+    if action == 'like':
+        query_post.bones.append(current_user)
+        DB.session.commit()
+    if action == 'unlike' and current_user in query_post.bones:
+        query_post.bones.remove(current_user)
+        DB.session.commit()
+    print(query_post.bones)
+    return 'OK'
+
 @APP.route('/logout')
 @login_required
 def logout():
@@ -302,4 +321,4 @@ def profile():
 
 
 if __name__ == '__main__':
-    APP.run(debug=True)
+    APP.run(host='0.0.0.0',debug=True)

@@ -21,6 +21,14 @@ DB = SQLAlchemy()
 
 
 
+
+BONES_USER_POST = DB.Table('bones_user_post',
+                           DB.Column('post_id', DB.Integer, DB.ForeignKey('post.id')),
+                           DB.Column('user_id', DB.Integer, DB.ForeignKey('user.id')))
+
+
+
+
 class User(UserMixin, DB.Model):
     '''
     Contains informations about a user
@@ -42,6 +50,10 @@ class User(UserMixin, DB.Model):
     phone = DB.Column(DB.String(20), unique=True)
     posts = DB.relationship('Post', backref='user', lazy=True)
     rank = DB.Column(DB.Integer, DB.ForeignKey('rank.id'), default=2)
+    bones = DB.relationship('Post', secondary=BONES_USER_POST)
+
+    def has_liked(self, pid):
+        return Post.query.filter_by(id=pid).first() in self.bones
 
 
 class Rank(DB.Model):
@@ -84,8 +96,10 @@ class Post(DB.Model):
     user_id = DB.Column(DB.Integer, DB.ForeignKey('user.id'), nullable=False)
     comments = DB.relationship('Comment', backref='post', lazy=True)
     tags = DB.relationship('Tag', secondary=POST_TAG)
+    bones = DB.relationship('User', secondary=BONES_USER_POST)
     date = DB.Column(DB.DateTime, default=datetime.utcnow)
     images = DB.relationship('Image', backref='post', lazy=True)
+
 
 
 class Image(DB.Model):

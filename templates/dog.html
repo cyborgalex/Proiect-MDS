@@ -3,6 +3,8 @@
 {%block links%}
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/view.css') }}">
 <script src="{{url_for('static', filename='js/view.js') }}"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 
 {%endblock%}
 
@@ -57,7 +59,18 @@
 
   <div>
     <P>
-      BONES: <span>TODO</span>
+      BONES: <span>{{dog.bones|length}}</span>
+      {%if current_user.is_authenticated%}
+        {%if current_user.has_liked(dog.id)%}
+          <span class="bone red" class="bone" onclick="like({{dog.id}},'unlike')">
+            <i class="fas fa-bone"></i>
+          </span>
+        {%else%}
+        <span class="bone" >
+          <i class="fas fa-bone" onclick="like({{dog.id}},'like')"></i>
+        </span>
+        {%endif%}
+      {%endif%}
     </P>
   </div>
 
@@ -70,6 +83,13 @@
     
 
 </div>
+<div>
 
 
+  
+    FIX THIISSSSS
+    dsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddd
+  
+  </div>
+ 
 {%endblock%}
