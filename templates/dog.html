@@ -37,6 +37,7 @@
 </div>
 
 <div class="content_info">
+  <h2>INFO</h2>
   <div class="name">
     <p>
       NAME: <span>{{dog.title}}</span>
@@ -62,12 +63,12 @@
       BONES: <span>{{dog.bones|length}}</span>
       {%if current_user.is_authenticated%}
         {%if current_user.has_liked(dog.id)%}
-          <span class="bone red" class="bone" onclick="like({{dog.id}},'unlike')">
+          <span class="bone red" class="bone" onclick="like('{{dog.id}}','unlike');">
             <i class="fas fa-bone"></i>
           </span>
         {%else%}
         <span class="bone" >
-          <i class="fas fa-bone" onclick="like({{dog.id}},'like')"></i>
+          <i class="fas fa-bone" onclick="like('{{dog.id}}','like');"></i>
         </span>
         {%endif%}
       {%endif%}
@@ -83,13 +84,15 @@
     
 
 </div>
-<div>
+<div class="container">
+  <h2>
+    DESCRIPTION
+  </h2>
+  <p>{{dog.text}}</p>
+</div>
 
-
-  
-    FIX THIISSSSS
-    dsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddddsadddddddddddddddd
-  
-  </div>
+<div class="container">
+  <h2>COMMENTS</h2>
+</div>
  
 {%endblock%}
