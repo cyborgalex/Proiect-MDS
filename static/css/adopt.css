@@ -132,8 +132,8 @@ h1 {
   .item input{
     position: absolute;
     top: 65px;
-    left: 0;
-    width: 90%;
+    left: 10px;
+    width: 60%;
     height: 25%;
     z-index: 99999;
     opacity: 0;
