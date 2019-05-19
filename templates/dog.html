@@ -14,15 +14,22 @@
 <div class="content_img">
   <div class="slideshow-container">
 
-    {%for img in dog.images%}
-    <div class="mySlides fade">
-      
-      <img src="{{url_for('static', filename='uploads/images/'+img.name) }}">
-    </div>
-    {%endfor%}
 
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    {%if dog.images|length>0%}
+		{%for img in dog.images%}
+		<div class="mySlides fade">
+			<img src="{{url_for('static', filename='uploads/images/'+img.name) }}">
+		</div>
+		{%endfor%}
+		
+		<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+		<a class="next" onclick="plusSlides(1)">&#10095;</a>
+		
+	{%else%}
+		<div class="mySlides fade">
+			<img src="{{url_for('static',filename='img/unknown.png')}}">                    
+		</div>
+	{%endif%}
 
   </div>
 
@@ -64,11 +71,11 @@
       {%if current_user.is_authenticated%}
         {%if current_user.has_liked(dog.id)%}
           <span class="bone red" class="bone" onclick="like('{{dog.id}}','unlike');">
-            <i class="fas fa-bone">dddd</i>
+            <i class="fas fa-bone"></i>
           </span>
         {%else%}
         <span class="bone" >
-          <i class="fas fa-bone" onclick="like('{{dog.id}}','like');">dd</i>
+          <i class="fas fa-bone" onclick="like('{{dog.id}}','like');"></i>
         </span>
         {%endif%}
       {%endif%}
