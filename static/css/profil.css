@@ -1,0 +1,63 @@
+*{ box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+body{
+	display: block;
+    margin: 8px;
+	
+}
+.main_h ul{
+	margin-top: 1em;
+}
+
+.main_h .row{
+	margin-left:10%;
+	margin-right: 0px
+}
+
+.tab-pane{
+	width: 100%;
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 2% 3%;
+	
+}
+
+ .custom-input-file {
+    overflow: hidden;
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: #eee url('../img/avatar.png');    
+    background-size: 120px;
+    border-radius: 120px;
+}
+ 
+ input[type="file"]{
+    z-index: 999;
+    line-height: 0;
+    font-size: 0;
+    position: absolute;
+    opacity: 0;
+    filter: alpha(opacity = 0);-ms-filter: "alpha(opacity=0)";
+    margin: 0;
+    padding:0;
+    left:0;
+}
+ .uploadPhoto {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    display: none;
+    width: 50%;
+    height: 50%;
+    color: #fff;    
+    text-align: center;
+    line-height: 60px;
+    text-transform: uppercase;    
+    background-color: rgba(0,0,0,.3);
+    border-radius: 50px;
+    cursor: pointer;
+}
+.custom-input-file:hover .uploadPhoto { display: block; }	
