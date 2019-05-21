@@ -97,40 +97,34 @@
   </h2>
   <p>{{dog.text}}</p>
 </div>
-
-<div class="container">
-  <h2>COMMENTS</h2>
-  <form action="dog?id={{dog.id}}" method="POST">
-  {{form.csrf_token}}
-  {{form.text}}
-  <input type="submit" value="post">
-  </form>
   
-  {%for comment in comments%}
-  <div>
-    <p>={{comment.user.username}} said</p>
-    <p>{{comment.text}}</p>
-    
-  </div>
-  {%endfor%}
-</div>
-
-
 
 <div class="container_com">
     <h2>Leave your comment</h2>
-  <form>      
+  <form action="dog?id={{dog.id}}" method="POST">      
     <p id="alert" class="alertbox"></p>
-     <input type="text" class="form-control" placeholder="Comment" id="text_comment">
-     
+     {{form.csrf_token}}
+     {{form.text(class="form-control",id="text_comment")}}
+    <br>
      <button type="submit" id="btn_add_comment" class="btn btn-primary">Add Comment</button>
   </form>           
      
-  <div id="js-discussion">
-    <ul id="list_comments"></ul>
-  </div>     
+    
 </div>
+<div class="comments">
+    <ul id="list_comments">
+        {%for comment in comments%}
+        <li>
+        <div>
+            <p class="comtext">{{comment.text}}</p>
+            <h4>Posted by {{comment.user.username}}</h4>
 
+          
+        </div>
+      </li>
+  {%endfor%}
+    </ul>
+  </div> 
 
 
 

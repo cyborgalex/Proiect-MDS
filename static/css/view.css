@@ -154,10 +154,12 @@ main{
 }
 
 .container_com{
-  margin-bottom: 80px; 
+  margin-top:40px;
+  text-align:center;
+  margin-bottom: 40px; 
 }
 
-.container_com button, input {
+.container_com button, textarea {
   background-color: #FFF;
   font-size:15px;
   border: 1px solid #000;
@@ -166,40 +168,38 @@ main{
   height: 50px;
   
 }
-.container_com input{
-  width: 70%;
+textarea{
+  width: 50%;
   max-width: 100%;
+  min-height:5em;
 }
 
 .container_com button:hover {
-  background: skyblue;
+  background: rebeccapurple;
   cursor: pointer;
   transition: .3s ease;
+  color:white;
 }
 
 
 
-.container_com ul {
+.comments ul {
   list-style: none;
 }
 
-.container_com li {
-  background: rgb(153, 71, 126);
-  border: 2px solid #000;
-  box-shadow: 2px 2px 2px rgba(0,0,0, 0.25);
+.comments li {
+  background: #ebe0e5;
+  /* border: 2px solid #000; */
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.404);
   margin: 20px;
   overflow: auto;
   padding: 10px;
   
 }
 
-.container_com li .task {
-  margin: 10px;
-}
 
-.container_com li .date {
-  float: right;
-  margin: 5px;
+.comments h4{
+  text-align:right;
 }
 
 
