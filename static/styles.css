@@ -1,12 +1,21 @@
 .clicked{
-    background-color: blue;
-    color: red;
-    text-align:center;
+    background-color: rgb(200,200,255) !important; 
 }
 
+
+.tag{
+    background-color:rgb(230,230,255);
+    outline:none;
+    padding:10px;
+    margin:2px;
+    display:inline;
+    border-radius:10%;
+    border:none;
+}
+/* 
 #list{
     height:200px;
     overflow:auto;
     min-width: 200px;
     max-width:200px;
-}
+} */

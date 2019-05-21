@@ -213,6 +213,9 @@ def dog():
         return redirect(url_for('index'))
 
     query = Post.query.filter_by(id=post_id).first()
+    if query is None:
+        return redirect(url_for('index'))
+
     if form.validate_on_submit():
         gigi = Comment(text=form.text.data, user_id=current_user.id, post_id=post_id)
         query.comments.append(gigi)
@@ -329,6 +332,9 @@ def profile():
         form.phone.data = current_user.phone
     return render_template('profile.html', form=form)
 
+@APP.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')
 
 
 if __name__ == '__main__':

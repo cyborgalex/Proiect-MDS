@@ -183,8 +183,7 @@ class PostForm(FlaskForm):
     age = IntegerField('age', validators=[Optional()])
     gender = RadioField('Gender', choices=[('Male', 'Male'), ('Female', 'Female')])
     upload = FileField('image', validators=[
-        FileRequired(),
-        FileAllowed(['jpg', 'png'], 'Images only!')
+            FileAllowed(['jpg', 'png'], 'Images only!')
         ])
 
 class CommentForm(FlaskForm):
