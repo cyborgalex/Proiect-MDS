@@ -112,7 +112,7 @@ h1 {
 
 .item .box-bone {
 	font-size: 15px;
-	border-top: 1px solid rgb(179, 179, 179); /* for old browsers */
+	border-top: 1px solid rgb(179, 179, 179); /* for old brandsers */
 	border-top: 1px solid rgba(179, 179, 179, 0.7);
 	margin-top: 5px;
 	padding-top: 2px;
@@ -132,8 +132,8 @@ h1 {
   .item input{
     position: absolute;
     top: 65px;
-    left: 0;
-    width: 90%;
+    left: 10px;
+    width: 60%;
     height: 25%;
     z-index: 99999;
     opacity: 0;
@@ -148,3 +148,11 @@ h1 {
     color: #e74c3c;
   }
   
+
+  .mininaltime{
+    min-height:10em;
+    background-color:#EEE;
+    border-radius:2%;
+  }
+
+

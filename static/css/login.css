@@ -93,7 +93,7 @@
   color: #EF3B3A;
 }
 body {
-  background: #c97dcc; /* fallback for old browsers */
+  background: #c97dcc; /* fallback for old brandsers */
   background: -webkit-linear-gradient(left, #b15eb4, #6f3b70);
   background: -moz-linear-gradient(left, #b15eb4, #6f3b70);
   background: -o-linear-gradient(left, #b15eb4, #6f3b70);

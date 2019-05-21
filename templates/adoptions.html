@@ -4,6 +4,7 @@
 
 <link href="{{url_for('static', filename='css/adopt.css') }}" 
 rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <script type="text/javascript" 
 src="{{url_for('static', filename='js/adopt.js') }}">
 </script>
@@ -28,6 +29,13 @@ src="{{url_for('static', filename='js/adopt.js') }}">
                 {%endif%}
                 <div class="hvrbox-layer_top">
                     <div class="hvrbox-text"> <p class="name">{{post.title}}</p>    
+                        <div class="box-bone">
+                            <input type="checkbox" name="" value="">
+                            <div class="bone">
+                                 <i class="fas fa-bone"></i>
+                            </div>
+                        </div>
+                    
                     </div>
                 </div>
 

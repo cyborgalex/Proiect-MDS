@@ -112,19 +112,19 @@ main{
 }
 
 /* Fading animation */
-.fade {
-  -webkit-animation-name: fade;
+.fadeanim {
+  -webkit-animation-name: fadeanim;
   -webkit-animation-duration: 1.5s;
-  animation-name: fade;
+  animation-name: fadeanim;
   animation-duration: 1.5s;
 }
 
-@-webkit-keyframes fade {
+@-webkit-keyframes fadeanim {
   from {opacity: .4} 
   to {opacity: 1}
 }
 
-@keyframes fade {
+@keyframes fadeanim {
   from {opacity: .4} 
   to {opacity: 1}
 }
@@ -143,3 +143,64 @@ main{
       
   }
 }
+
+
+
+/* comentarii */
+
+
+.alertbox {
+  color: #f00;
+}
+
+.container_com{
+  margin-bottom: 80px; 
+}
+
+.container_com button, input {
+  background-color: #FFF;
+  font-size:15px;
+  border: 1px solid #000;
+  box-shadow: 2px 2px 2px rgba(0,0,0, 0.25);
+  padding: 10px;
+  height: 50px;
+  
+}
+.container_com input{
+  width: 70%;
+  max-width: 100%;
+}
+
+.container_com button:hover {
+  background: skyblue;
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+
+
+.container_com ul {
+  list-style: none;
+}
+
+.container_com li {
+  background: rgb(153, 71, 126);
+  border: 2px solid #000;
+  box-shadow: 2px 2px 2px rgba(0,0,0, 0.25);
+  margin: 20px;
+  overflow: auto;
+  padding: 10px;
+  
+}
+
+.container_com li .task {
+  margin: 10px;
+}
+
+.container_com li .date {
+  float: right;
+  margin: 5px;
+}
+
+
+  

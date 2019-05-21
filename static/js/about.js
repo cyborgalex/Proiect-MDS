@@ -26,13 +26,4 @@ $(document).ready(function() {
         }, 500);
         event.preventDefault();
     });
-
-
-    $('.box-bone').click(function(event){
-        
-        $(this).prop('checked', true);
-       // alert(event.target);
-
-    });
-
 });
