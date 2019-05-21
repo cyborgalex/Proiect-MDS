@@ -2,7 +2,8 @@ $( document ).ready(function() {
     let lista=$("#taglist");
     // lista.css("disabled","disabled");
     let tagArray=[]
-    $("#list p").click(function(){
+    $("#list button").click(function(event){
+        event.preventDefault();
         value=this.innerHTML;
         let found=tagArray.findIndex(function(e){return e==value});
         console.log(found);

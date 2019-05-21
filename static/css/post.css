@@ -1,0 +1,25 @@
+*{ box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+body{
+	display: block;
+    margin: 8px;
+	
+}
+.main_h ul{
+	margin-top: 1em;
+}
+
+.main_h .row{
+	margin-left:10%;
+	margin-right: 0px
+}
+
+.tab-pane{
+	width: 100%;
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 2% 3%;
+	
+}
