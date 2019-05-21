@@ -213,6 +213,9 @@ def dog():
         return redirect(url_for('index'))
 
     query = Post.query.filter_by(id=post_id).first()
+    if query is None:
+        return redirect(url_for('index'))
+
     if form.validate_on_submit():
         gigi = Comment(text=form.text.data, user_id=current_user.id, post_id=post_id)
         query.comments.append(gigi)
