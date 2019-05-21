@@ -14,15 +14,22 @@
 <div class="content_img">
   <div class="slideshow-container">
 
-    {%for img in dog.images%}
-    <div class="mySlides fade">
-      
-      <img src="{{url_for('static', filename='uploads/images/'+img.name) }}">
-    </div>
-    {%endfor%}
 
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    {%if dog.images|length>0%}
+		{%for img in dog.images%}
+		<div class="mySlides fade">
+			<img src="{{url_for('static', filename='uploads/images/'+img.name) }}">
+		</div>
+		{%endfor%}
+		
+		<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+		<a class="next" onclick="plusSlides(1)">&#10095;</a>
+		
+	{%else%}
+		<div class="mySlides fade">
+			<img src="{{url_for('static',filename='img/unknown.png')}}">                    
+		</div>
+	{%endif%}
 
   </div>
 
@@ -107,5 +114,28 @@
   </div>
   {%endfor%}
 </div>
+
+
+
+<div class="container_com">
+    <h2>Leave your comment</h2>
+  <form>      
+    <p id="alert" class="alertbox"></p>
+     <input type="text" class="form-control" placeholder="Comment" id="text_comment">
+     
+     <button type="submit" id="btn_add_comment" class="btn btn-primary">Add Comment</button>
+  </form>           
+     
+  <div id="js-discussion">
+    <ul id="list_comments"></ul>
+  </div>     
+</div>
+
+
+
+
+
+
+
  
 {%endblock%}

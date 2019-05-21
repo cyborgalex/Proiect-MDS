@@ -31,7 +31,7 @@ $(document).ready(function() {
     $('.box-bone').click(function(event){
         
         $(this).prop('checked', true);
-        alert(event.target);
+       // alert(event.target);
 
     });
 

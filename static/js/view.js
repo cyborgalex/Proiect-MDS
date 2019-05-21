@@ -76,3 +76,65 @@ function like(id,action){
         })
     });
 }
+
+
+
+
+//comentarii
+
+
+
+
+function $(element) {
+	return document.getElementById(element);
+}
+const alertBox = $('alert');
+let commentSubmit = $('btn_add_comment');
+const commentBox  = $('text_comment');
+let commentList   = $('list_comments');
+
+commentSubmit.addEventListener('click', function(e) {
+	e.preventDefault();
+  const d = new Date();
+  let time = d.toLocaleTimeString();
+	let comment  = commentBox.value.trim();
+	let newLI = document.createElement('li');
+  
+  if (commentBox.value.length > 1) {
+  $('alert').innerText = '';
+  comment = `<p class="comment">${comment}</p><p class="date"><b>Posted on: ${time}</b></p>`;
+	newLI.innerHTML = comment;
+	commentList.appendChild(newLI);
+
+  fadeOut(newLI);
+    
+    commentBox.value = '';
+  } else {
+    $('alert').innerText = 'Please enter a comment!';
+  }
+}, false);
+
+
+function fadeOut(element) {
+    element.style.background = "pink";
+    var opacity = 1,
+    fps = 90;  
+    function decrease () {
+        opacity -= 0.05;
+        if (opacity <= .40){
+            // complete
+            element.style.background = "white";
+            element.style.opacity = 1;
+            return true;
+        }
+        element.style.opacity = opacity;
+        setTimeout(decrease,fps);
+    }
+    decrease();
+}
+
+
+
+
+
+

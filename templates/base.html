@@ -12,7 +12,7 @@
 
 <body>
     <header class="main_h">
-        <div class="row">
+        <div class="rand">
             <a class="logo" href="{{url_for('index')}}">K9</a>
     
             <div class="mobile-toggle">
@@ -27,7 +27,7 @@
                     <li><a href="{{url_for('adddog')}}">Add a dogo</a></li>
                     {%endif%}
                     <li><a href="{{url_for('adoptions')}}">Adoptions</a></li>
-                    <li><a href="{{url_for('static',filename='page/about.html')}}">About us</a></li>
+                    <li><a href="{{url_for('about')}}">About us</a></li>
                     {%if current_user.is_authenticated%}
                     <li><a href="{{url_for('logout')}}">Logout</a></li>
                     {%else%}
@@ -36,7 +36,7 @@
                 </ul>
             </nav>
     
-        </div> <!-- / row -->
+        </div> <!-- / rand -->
     
     </header>
 
