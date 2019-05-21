@@ -2,7 +2,9 @@
 {%block title%}Home{%endblock%}
 {%block links%}
 <link rel="stylesheet" type="text/css"
-      href="{{url_for('static', filename='css/about.css') }}" >
+	  href="{{url_for('static', filename='css/about.css') }}" >
+	  <script src="{{url_for('static', filename='js/about.js') }}"></script>
+
 {%endblock%}
 {%block content%}
 <main>
@@ -68,8 +70,7 @@
 	
 </main>
 	
-{%block content%}
-
+{%endblock%}
 	
 	
 	
