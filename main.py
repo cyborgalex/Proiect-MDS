@@ -332,6 +332,9 @@ def profile():
         form.phone.data = current_user.phone
     return render_template('profile.html', form=form)
 
+@APP.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')
 
 
 if __name__ == '__main__':
