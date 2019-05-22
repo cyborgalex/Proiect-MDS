@@ -25,7 +25,9 @@ DB.init_app(APP)
 
 
 TAGS = ['golden', 'husky', 'crossbreed',
-        'labrador', 'dad3addada', 'dadaddada', 'dadadadada1', 'dadadda2da']
+        'labrador', 'adoption', 'foster', 
+        'cute', 'big', 'medium', 'small',
+        'young','old','hurt']
 
 
 # with APP.app_context():
